@@ -36,7 +36,12 @@
 	lowPassResults = ALPHA * peakPowerForChannel + (1.0 - ALPHA) * lowPassResults;	
 	
 	if (lowPassResults < 0.95)
+    {
 		NSLog(@"Mic blow detected");
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Mic blow detected!" message:[NSString stringWithFormat:@"%d",lowPassResults] delegate:self cancelButtonTitle:NULL otherButtonTitles:NULL, nil];
+    [alertView show];
+        
+    }
 }
 
 
