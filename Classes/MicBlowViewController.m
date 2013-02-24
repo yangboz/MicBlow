@@ -34,11 +34,15 @@
 	const double ALPHA = 0.05;
 	double peakPowerForChannel = pow(10, (0.05 * [recorder peakPowerForChannel:0]));
 	lowPassResults = ALPHA * peakPowerForChannel + (1.0 - ALPHA) * lowPassResults;	
-	
-	if (lowPassResults < 0.95)
+    NSString *resultStr = @"Average input:";
+    resultStr = [resultStr stringByAppendingFormat:@"%f Peak input:%f Low pass results:%f",[recorder averagePowerForChannel:0],[recorder peakPowerForChannel:0],lowPassResults];
+//	NSLog(@"Average input: %f Peak input: %f Low pass results: %f", [recorder averagePowerForChannel:0], [recorder peakPowerForChannel:0], lowPassResults);
+    NSLog(@"Mic Blow befor filter:%@",resultStr);
+    //@see: http://mobileorchard.com/tutorial-detecting-when-a-user-blows-into-the-mic/
+	if (lowPassResults > 0.55)
     {
 		NSLog(@"Mic blow detected");
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Mic blow detected!" message:[NSString stringWithFormat:@"%d",lowPassResults] delegate:self cancelButtonTitle:NULL otherButtonTitles:NULL, nil];
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Mic blow detected!" message:resultStr delegate:self cancelButtonTitle:NULL otherButtonTitles:NULL, nil];
     [alertView show];
         
     }
